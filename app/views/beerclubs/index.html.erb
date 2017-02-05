@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Beerclubs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Founded</th>
+      <th>City</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @beerclubs.each do |beerclub| %>
+      <tr>
+        <td><%= beerclub.name %></td>
+        <td><%= beerclub.founded %></td>
+        <td><%= beerclub.city %></td>
+        <td><%= link_to 'Show', beerclub %></td>
+        <td><%= link_to 'Edit', edit_beerclub_path(beerclub) %></td>
+        <td><%= link_to 'Destroy', beerclub, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Beerclub', new_beerclub_path %>

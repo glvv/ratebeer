@@ -6,7 +6,15 @@ gem 'rails', '4.2.7'
 ruby '2.3.1'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.5'
   gem 'sqlite3'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'simplecov', require: false
 end
 
 group :production do

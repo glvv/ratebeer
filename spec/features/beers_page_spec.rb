@@ -5,6 +5,7 @@ include Helpers
 describe "Beer" do
   let!(:brewery) { FactoryGirl.create :brewery, name:"Koff" }
   let!(:user) { FactoryGirl.create :user }
+  let!(:style) { FactoryGirl.create :style }
 
   before :each do
     sign_in(username:"Pekka", password:"Foobar1")
@@ -13,7 +14,8 @@ describe "Beer" do
   it "is possible to add new beer with a valid name" do
     visit new_beer_path
     fill_in('beer_name', with:'Myrmidon')
-    select('Lager', from:'beer_style')
+    save_and_open_page
+    select('Lager', from:'beer_style_id')
     select(brewery.name, from:'beer_brewery_id')
     expect{
       click_button "Create Beer"
@@ -23,7 +25,8 @@ describe "Beer" do
 
   it "is not possible to add new beer with an invalid name" do
     visit new_beer_path
-    select('IPA', from:'beer_style')
+    save_and_open_page
+    select('Lager', from:'beer_style_id')
     select(brewery.name, from:'beer_brewery_id')
     expect{
       click_button "Create Beer"

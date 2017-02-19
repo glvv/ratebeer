@@ -18,22 +18,27 @@ FactoryGirl.define do
     year 1900
   end
 
+  factory :style do
+    name "Lager"
+    description "Dry as ice"
+  end
+
   factory :beer do
     name "anonymous"
     brewery
-    style "Lager"
+    style
   end
 
   factory :ipa, class: Beer do
     name "anonymous"
     brewery
-    style "IPA"
+    association :style, factory: :style, name: "IPA", description:"Pale"
   end
 
   factory :bitter, class: Beer do
     name "anonymous"
     association :brewery, factory: :brewery, name: "Fire", year: 1993
-    style "Bitter"
+    association :style, factory: :style, name: "Bitter", description:"Bitter"
   end
 
 end

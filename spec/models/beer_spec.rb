@@ -7,12 +7,14 @@ RSpec.describe Beer, type: :model do
     expect(Beer.count).to eq(0)
   end
   it "is is saved when name and style are proper" do
-    beer = Beer.create name:"ProperName", style:"ProperStyle"
+    lager = FactoryGirl.create(:style);
+    beer = Beer.create name:"ProperName", style:lager
     expect(beer).to be_valid
     expect(Beer.count).to eq(1)
   end
   it "is is not saved when name is missing" do
-    beer = Beer.create style:"Nameless"
+    lager = FactoryGirl.create(:style);
+    beer = Beer.create style:lager
     expect(beer).not_to be_valid
     expect(Beer.count).to eq(0)
   end

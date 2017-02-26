@@ -10,5 +10,6 @@
   <%= @style.description %>
 </p>
 
-<%= link_to 'Edit', edit_style_path(@style) %> |
+
+<%= edit_and_destroy_buttons(@style) %>
 <%= link_to 'Back', styles_path %>

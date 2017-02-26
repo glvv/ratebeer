@@ -18,7 +18,7 @@
 <% if @beer.ratings.empty? %>
  beer has not yet been rated!
 <% else %>
- has <%= pluralize(@beer.ratings.count, 'rating')%>, average + <%= @beer.average_rating %>
+ has <%= pluralize(@beer.ratings.count, 'rating')%>, average <%= round(@beer.average_rating) %>
 <% end %>
 
 
@@ -31,6 +31,6 @@
     <%= f.submit %>
   <% end %>
 
-  <%= link_to 'Edit', edit_beer_path(@beer) %>
-  <%= link_to 'Destroy', @beer, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+  <%= edit_and_destroy_buttons(@beer) %>
 <% end %>

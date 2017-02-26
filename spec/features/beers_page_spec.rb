@@ -14,7 +14,6 @@ describe "Beer" do
   it "is possible to add new beer with a valid name" do
     visit new_beer_path
     fill_in('beer_name', with:'Myrmidon')
-    save_and_open_page
     select('Lager', from:'beer_style_id')
     select(brewery.name, from:'beer_brewery_id')
     expect{
@@ -25,7 +24,6 @@ describe "Beer" do
 
   it "is not possible to add new beer with an invalid name" do
     visit new_beer_path
-    save_and_open_page
     select('Lager', from:'beer_style_id')
     select(brewery.name, from:'beer_brewery_id')
     expect{

@@ -15,6 +15,11 @@ class Beer < ActiveRecord::Base
     ratings.order(score: :desc).limit(1).first.beer
   end
 
+  def self.top(n)
+    sorted_by_rating_in_desc_order = Beer.all.sort_by{ |b| -(b.average_rating||0) }
+    sorted_by_rating_in_desc_order.slice(0, n)
+  end
+
   validates :name, presence: true
   validates :style, presence: true
 end

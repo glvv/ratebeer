@@ -27,4 +27,9 @@ class User < ActiveRecord::Base
     h.max_by{|k,v| v}[0]
   end
 
+  def self.most_active_users(n)
+    sorted_by_ratings_in_desc_order = User.all.sort_by{ |u| -(u.ratings.count||0) }
+    sorted_by_ratings_in_desc_order.slice(0, n)
+  end
+
 end

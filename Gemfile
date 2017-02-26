@@ -5,6 +5,11 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rails', '4.2.7'
 ruby '2.3.1'
 
+gem 'bootstrap-sass'
+group :development do
+  gem 'rails_layout'
+end
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'sqlite3'

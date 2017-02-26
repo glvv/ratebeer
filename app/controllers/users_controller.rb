@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :admin, only: [:toggle_blocked]
 
   def index
     @users = User.all
@@ -10,6 +11,13 @@ class UsersController < ApplicationController
   end
 
   def edit
+  end
+
+  def toggle_blocked
+  user = User.find(params[:id])
+  user.update_attribute :blocked, (not user.blocked)
+  action = user.blocked? ? "frozen" : "unfrozen"
+  redirect_to :back, notice:"account #{action}"
   end
 
   def create

@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Ratebeer</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <div class="navibar">
-    <%= link_to 'Breweries', breweries_path %>
-    <%= link_to 'Beers', beers_path %>
-    <%= link_to 'Ratings', ratings_path %>
-    <%= link_to 'Users', users_path %>
-    <%= link_to 'Clubs', beerclubs_path %>
-    <%= link_to 'Places', places_path %>
-    <%= link_to 'Styles', styles_path %>
-    <% if current_user %>
-      <%= link_to 'Join a club', memberships_path + "/new" %>
-      <%= link_to 'Rate a beer', ratings_path + "/new" %>
-      <%= link_to current_user.username, current_user %>
-      <%= link_to 'Sign out', sessions_path, method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% else %>
-      <%= link_to 'Sign in', signin_path %>
-      <%= link_to 'Sign up', signup_path %>
-    <% end %>
-  </div>
-  <% if session[:last_rating].nil? %>
-    <p>no ratings given</p>
-  <% else %>
-    <p>previous rating: <%= session[:last_rating] %></p>
-  <% end %>
-  <%= yield %>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Ratebeer" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Ratebeer" %>">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
+    <%= csrf_meta_tags %>
+  </head>
 
-</body>
+
+  <body>
+    <header>
+      <%= render 'layouts/navigation' %>
+    </header>
+
+    <main role="main" class=".container">
+      <%= render 'layouts/messages' %>
+
+      <div class="row">
+        <div class="col-md-8">
+          <%= yield %>
+        </div>
+        <div class="col-md-4">
+          <img src="http://www.cs.helsinki.fi/u/mluukkai/wadror/pint.jpg" width="200">
+        </div>
+      </div>
+
+    </main>
+  </body>
 </html>

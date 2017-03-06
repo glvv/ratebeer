@@ -21,6 +21,10 @@ group :test do
   gem 'launchy'
   gem 'simplecov', require: false
   gem 'webmock'
+  gem 'selenium-webdriver', '2.53.4'
+  gem "chromedriver-helper"
+  gem 'database_cleaner'
+
 end
 
 group :production do
@@ -28,6 +32,10 @@ group :production do
    gem 'rails_12factor'
 end
 
+gem 'sucker_punch', '~> 2.0'
+
+gem 'rack-mini-profiler'
+gem 'jquery-turbolinks'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets

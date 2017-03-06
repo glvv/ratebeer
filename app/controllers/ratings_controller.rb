@@ -1,5 +1,6 @@
 class RatingsController < ApplicationController
-
+  before_action :skip_if_cached, only:[:index]
+  
     def index
         @recent_ratings = Rating.recent(5)
         @best_beers = Beer.top(3)
@@ -33,4 +34,12 @@ class RatingsController < ApplicationController
         rating.delete if current_user == rating.user
         redirect_to :back
     end
+
+    private
+
+    def skip_if_cached
+      @order = params[:order] || 'name'
+      return render :index if request.format.html? and fragment_exist?( 'ratings_statistics' )
+    end
+
 end

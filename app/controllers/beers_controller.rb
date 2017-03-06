@@ -1,13 +1,18 @@
 class BeersController < ApplicationController
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   before_action :admin, only: [:destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
-
+  before_action :skip_if_cached, only:[:index]
   # GET /beers
   # GET /beers.json
   def index
-    @beers = Beer.all
+      @order = params[:order] || 'name'
+      @beers = case @order
+        when 'name' then @beers = Beer.includes(:brewery, :style).all.order(:name)
+        when 'brewery' then @beers = Beer.includes(:brewery, :style).all.order("breweries.name")
+        when 'style' then @beers = Beer.includes(:brewery, :style).all.order("styles.name")
+      end
   end
 
   # GET /beers/1
@@ -15,6 +20,9 @@ class BeersController < ApplicationController
   def show
     @rating = Rating.new
     @rating.beer = @beer
+  end
+
+  def list
   end
 
   # GET /beers/new
@@ -40,6 +48,7 @@ class BeersController < ApplicationController
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
     end
+       ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
   end
 
   # PATCH/PUT /beers/1
@@ -54,6 +63,7 @@ class BeersController < ApplicationController
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
     end
+       ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
   end
 
   # DELETE /beers/1
@@ -64,6 +74,7 @@ class BeersController < ApplicationController
       format.html { redirect_to beers_url, notice: 'Beer was successfully destroyed.' }
       format.json { head :no_content }
     end
+       ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
   end
 
   private
@@ -80,5 +91,10 @@ class BeersController < ApplicationController
     def set_breweries_and_styles_for_template
       @breweries = Brewery.all
       @styles = Style.all
+    end
+
+    def skip_if_cached
+      @order = params[:order] || 'name'
+      return render :index if request.format.html? and fragment_exist?( 'beerlist-#{@order}' )
     end
 end

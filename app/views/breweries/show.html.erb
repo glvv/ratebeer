@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<% cache @brewery do %>
+
 <h2>
   <strong>Name:</strong>
   <%= @brewery.name %>
@@ -31,6 +33,8 @@
  has <%= pluralize(@brewery.ratings.count, 'rating')%>, average: <%= round(@brewery.average_rating) %>
 <% end %>
 </p>
+
+<% end %>
 
 <%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), method: :post, class: "btn btn-primary" %>
 

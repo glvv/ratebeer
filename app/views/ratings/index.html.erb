@@ -1,5 +1,6 @@
 <h2>Rating statistics</h2>
 
+<% cache 'rating_statistics', expires_in:10.minutes do %>
 
 <div class="col-md-4">
   <h3>
@@ -65,3 +66,5 @@
     </tbody>
   </table>
 </div>
+
+<% end %>

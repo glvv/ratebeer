@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   resources :users do
     post 'toggle_blocked', on: :member
   end
+  get 'beerlist', to:'beers#list'
+  get 'brewerylist', to:'breweries#list'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

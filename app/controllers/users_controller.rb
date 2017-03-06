@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :admin, only: [:toggle_blocked]
 
   def index
-    @users = User.all
+    @users = User.includes(:beers, :ratings).all
   end
 
   def new
